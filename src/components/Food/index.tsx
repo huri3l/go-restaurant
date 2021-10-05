@@ -4,11 +4,29 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
 import api from '../../services/api';
 
-function Food({ available, food, handleEditFood, handleDelete }) {
-  const [isAvailable, setIsAvailable] = useState();
+interface FoodDetails {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  available: boolean;
+  image: string;
+}
+
+interface FoodProps {
+  available: boolean;
+  food: FoodDetails;
+  handleEditFood: (food: FoodDetails) => void;
+  handleDelete: (id: number) => void;
+}
+
+export function Food({ available, food, handleEditFood, handleDelete }: FoodProps) {
+  const [isAvailable, setIsAvailable] = useState<boolean>(false);
 
   useEffect(() => {
     setIsAvailable(available);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function toggleAvailable() {
@@ -75,5 +93,3 @@ function Food({ available, food, handleEditFood, handleDelete }) {
     </Container>
   );
 }
-
-export default Food;
